@@ -1,0 +1,163 @@
+{
+  "main": {
+    "id": "6c16fa9ad89f745b",
+    "type": "split",
+    "children": [
+      {
+        "id": "821ce24bc9efdd18",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ed9aec0fd6b1435b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "README-jpa.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2593d60fffe1b79b",
+    "type": "split",
+    "children": [
+      {
+        "id": "7a6f4d597774d787",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "560103f2e3dbb919",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "631a1a5366ab6c1e",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "e5ad0f57fa5c49c5",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "94c75c4291214bbb",
+    "type": "split",
+    "children": [
+      {
+        "id": "127919c82ce2a634",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "bd9daaf6155b6e8b",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "README-jpa.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "0eedb5df4c84c485",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "README-jpa.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "97041c0593a1ef2d",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "053b4c69a428f8a2",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "README-jpa.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "ed9aec0fd6b1435b",
+  "lastOpenFiles": [
+    "target/test-classes/com/example/product_catalog_service/ProductDTOCatalogServiceApplicationTests.class",
+    "target/classes/com/example/product_catalog_service/rest/FakeStoreProductServiceRestClient.class",
+    "target/classes/com/example/product_catalog_service/rest/FakeStoreProductServiceRestClient$1.class",
+    "target/classes/com/example/product_catalog_service/model/Rating.class",
+    "target/classes/com/example/product_catalog_service/service/FakeStoreService.class",
+    "target/classes/com/example/product_catalog_service/controller/ProductController.class",
+    "target/classes/com/example/product_catalog_service/entity/Category.class",
+    "target/classes/com/example/product_catalog_service/mapper/ProductMapper.class",
+    "target/classes/com/example/product_catalog_service/entity/BaseModel.class",
+    "target/classes/com/example/product_catalog_service/entity/Product.class",
+    "target/classes/com/example/product_catalog_service/repo/ProductRepository.class"
+  ]
+}

@@ -1,0 +1,41 @@
+services:
+  nxt-email-service:
+    image: nxt-email-service:latest
+    container_name: email-service-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9008:9008"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/notification_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      KAFKA_BOOTSTRAP_SERVERS: host.docker.internal:9092
+      MAIL_PASSWORD: ${MAIL_PASSWORD:-dummy password}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+
+  postgres-db:
+    image: postgres:15
+    container_name: email-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: notification_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d notification_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

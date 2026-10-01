@@ -1,0 +1,102 @@
+[
+  {
+    "name": "Apple iPhone 14 Pro",
+    "description": "The latest iPhone with a 6.1-inch Super Retina XDR display and A16 Bionic chip.",
+    "imageUrl": "http://example.com/images/iphone-14-pro.jpg",
+    "price": 1099.99,
+    "category": {
+      "id": 1,
+      "name": "Electronics"
+    }
+  },
+  {
+    "name": "Sony WH-1000XM5",
+    "description": "Industry-leading noise-cancelling wireless headphones with adaptive sound control.",
+    "imageUrl": "http://example.com/images/sony-wh-1000xm5.jpg",
+    "price": 349.99,
+    "category": {
+      "id": 1,
+      "name": "Electronics"
+    }
+  },
+  {
+    "name": "Samsung QLED 55\" 4K Smart TV",
+    "description": "55-inch QLED TV with 4K resolution and Quantum HDR technology.",
+    "imageUrl": "http://example.com/images/samsung-qled-tv.jpg",
+    "price": 899.99,
+    "category": {
+      "id": 1,
+      "name": "Electronics"
+    }
+  },
+  {
+    "name": "Bose SoundLink Revolve+",
+    "description": "Portable Bluetooth speaker with 360-degree sound and up to 16 hours of playtime.",
+    "imageUrl": "http://example.com/images/bose-soundlink-revolve.jpg",
+    "price": 299.99,
+    "category": {
+      "id": 1,
+      "name": "Electronics"
+    }
+  },
+  {
+    "name": "Breville Smart Kettle",
+    "description": "1.7-liter electric kettle with five temperature settings and keep-warm function.",
+    "imageUrl": "http://example.com/images/breville-smart-kettle.jpg",
+    "price": 79.99,
+    "category": {
+      "id": 2,
+      "name": "Home Appliances"
+    }
+  },
+  {
+    "name": "Ninja Air Fryer",
+    "description": "4-quart air fryer with a digital control panel and multi-cooking functions.",
+    "imageUrl": "http://example.com/images/ninja-air-fryer.jpg",
+    "price": 139.99,
+    "category": {
+      "id": 2,
+      "name": "Home Appliances"
+    }
+  },
+  {
+    "name": "iRobot Roomba i7+",
+    "description": "Smart robot vacuum cleaner with self-emptying base and advanced navigation.",
+    "imageUrl": "http://example.com/images/irobot-roomba-i7.jpg",
+    "price": 699.99,
+    "category": {
+      "id": 2,
+      "name": "Home Appliances"
+    }
+  },
+  {
+    "name": "KitchenAid Professional 600 Series Stand Mixer",
+    "description": "6-quart stand mixer with a powerful motor and stainless steel bowl.",
+    "imageUrl": "http://example.com/images/kitchenaid-stand-mixer.jpg",
+    "price": 449.99,
+    "category": {
+      "id": 2,
+      "name": "Home Appliances"
+    }
+  },
+  {
+    "name": "Dell XPS 13 Laptop",
+    "description": "13.4-inch laptop with Intel Core i7 processor and InfinityEdge display.",
+    "imageUrl": "http://example.com/images/dell-xps-13.jpg",
+    "price": 1199.99,
+    "category": {
+      "id": 1,
+      "name": "Electronics"
+    }
+  },
+  {
+    "name": "Canon EOS R5",
+    "description": "Mirrorless digital camera with 45 MP full-frame sensor and 8K video recording.",
+    "imageUrl": "http://example.com/images/canon-eos-r5.jpg",
+    "price": 3899.99,
+    "category": {
+      "id": 1,
+      "name": "Electronics"
+    }
+  }
+]

@@ -1,0 +1,69 @@
+accessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaXNzIjoibnh0LnVzZXJfc2VydmljZSIsImlhdCI6MTc5MDQ3NjU4MywiZXhwIjoxNzkwNDc3NDgzLCJqdGkiOiIxNmMxN2Y0Ni0zNDJlLTQxN2MtOTkyOC0yY2FhMWYwODM1YzkiLCJlbWFpbCI6InN1bWl0QGV4YW1wbGUuY29tIn0.MfBU4UHfgf9FqLa748OzuzyLKbG0iP_8QwFeMPpeHkE
+
+refreshToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaXNzIjoibnh0LnVzZXJfc2VydmljZSIsImlhdCI6MTc5MDQ3NjU4MywiZXhwIjoxNzkxMDgxMzgzLCJqdGkiOiJjY2NhZmViNy04MTNlLTQ1OTAtOTRmZC01YjIxNjQ5Y2U1M2EiLCJlbWFpbCI6InN1bWl0QGV4YW1wbGUuY29tIn0.WSVz7RbiitvKauIo6F1eZfSWTY3bOUYn5YSi-0pdjfU
+
+
+{
+  "name": "Wool jacket",
+  "description": "Warm wool jacket for winter",
+  "price": 5000.99,
+  "categoryId": {{Outerwear}},
+  "imageUrls": ["https://example.com/wool-jacket.jpg"],
+  "specifications": {
+    "material": "wool",
+    "size": "M"
+  },
+  "metadata": {
+    "featured": true
+  }
+}
+
+{
+  "name": "Mackbook",
+  "description": "14 inch laptop for work and study",
+  "price": 150000.00,
+  "categoryId": {{Electronics}},
+  "imageUrls": ["https://example.com/mac-book-14.jpg"],
+  "specifications": {
+    "ram": "16GB",
+    "storage": "512GB SSD",
+    "processor": "Intel Core i5"
+  },
+  "metadata": {
+    "featured": true
+  }
+}
+
+{
+  "name": "Formal cotton shirt",
+  "description": "White cotton shirt for office wear",
+  "price": 1500.50,
+  "categoryId": {{Formal}},
+  "imageUrls": ["https://example.com/formal-shirt.jpg"],
+  "specifications": {
+    "material": "cotton",
+    "size": "L",
+    "color": "white"
+  },
+  "metadata": {
+    "featured": false
+  }
+}
+
+
+
+{
+  "name": "Formal trousers",
+  "description": "Slim formal trousers",
+  "price": 3500.00,
+  "categoryId": {{FormalTrouser}},
+  "imageUrls": ["https://example.com/formal-trousers.jpg"],
+  "specifications": {
+    "material": "polyester blend",
+    "size": "32",
+    "color": "charcoal"
+  },
+  "metadata": {
+    "featured": false
+  }
+}

@@ -1,0 +1,486 @@
+{
+  "info": {
+    "name": "NXT Ecommerce",
+    "description": "Requests for the running Spring Boot services. Register, create category, create product, add to cart, and checkout save ids into collection variables for the later requests. Profile calls send Authorization: Bearer {{accessToken}}. Start Postgres, Kafka, Redis, MongoDB, and Elasticsearch before the services that need them.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "userBase", "value": "http://localhost:9002/user-mgmt" },
+    { "key": "catalogBase", "value": "http://localhost:9004/product-catalog" },
+    { "key": "cartBase", "value": "http://localhost:9005" },
+    { "key": "orderBase", "value": "http://localhost:9006" },
+    { "key": "paymentBase", "value": "http://localhost:9007" },
+    { "key": "emailBase", "value": "http://localhost:9008" },
+    { "key": "discoveryBase", "value": "http://localhost:9001" },
+    { "key": "accessToken", "value": "" },
+    { "key": "refreshToken", "value": "" },
+    { "key": "userId", "value": "1" },
+    { "key": "categoryId", "value": "1" },
+    { "key": "productId", "value": "1" },
+    { "key": "cartItemId", "value": "1" },
+    { "key": "orderId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Service discovery",
+      "item": [
+        {
+          "name": "Eureka apps",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": "{{discoveryBase}}/eureka/apps"
+          }
+        }
+      ]
+    },
+    {
+      "name": "User service",
+      "item": [
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const body = pm.response.json();",
+                  "  pm.collectionVariables.set('userId', String(body.userId));",
+                  "  pm.collectionVariables.set('accessToken', body.accessToken);",
+                  "  pm.collectionVariables.set('refreshToken', body.refreshToken);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Sumit\",\n  \"lastName\": \"Sharma\",\n  \"email\": \"sumit@example.com\",\n  \"password\": \"Password1\",\n  \"registrationType\": \"EMAIL\",\n  \"metadata\": {\n    \"city\": \"Pune\"\n  }\n}"
+            },
+            "url": "{{userBase}}/api/v1/users"
+          }
+        },
+        {
+          "name": "Login with password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const body = pm.response.json();",
+                  "  pm.collectionVariables.set('userId', String(body.userId));",
+                  "  pm.collectionVariables.set('accessToken', body.accessToken);",
+                  "  pm.collectionVariables.set('refreshToken', body.refreshToken);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"sumit@example.com\",\n  \"password\": \"Password1\"\n}"
+            },
+            "url": "{{userBase}}/api/v1/auth/login/password"
+          }
+        },
+        {
+          "name": "Login with Google",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idToken\": \"replace-with-google-id-token\"\n}"
+            },
+            "url": "{{userBase}}/api/v1/auth/login/google",
+            "description": "Needs a real Google ID token."
+          }
+        },
+        {
+          "name": "Refresh token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const body = pm.response.json();",
+                  "  pm.collectionVariables.set('accessToken', body.accessToken);",
+                  "  pm.collectionVariables.set('refreshToken', body.refreshToken);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{userBase}}/api/v1/auth/refresh?refreshToken={{refreshToken}}",
+              "host": ["{{userBase}}"],
+              "path": ["api", "v1", "auth", "refresh"],
+              "query": [{ "key": "refreshToken", "value": "{{refreshToken}}" }]
+            }
+          }
+        },
+        {
+          "name": "Get my profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }]
+            },
+            "method": "GET",
+            "url": "{{userBase}}/api/v1/profile/me",
+            "description": "Requires the access token from register or login when the service is not started with the local profile."
+          }
+        },
+        {
+          "name": "Update my profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }]
+            },
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Sumit\",\n  \"lastName\": \"Sharma\"\n}"
+            },
+            "url": "{{userBase}}/api/v1/profile/me"
+          }
+        },
+        {
+          "name": "Request password reset",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"sumit@example.com\"\n}"
+            },
+            "url": "{{userBase}}/api/v1/password/reset"
+          }
+        },
+        {
+          "name": "Confirm password reset",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"replace-with-reset-token\",\n  \"newPassword\": \"Password2\"\n}"
+            },
+            "url": "{{userBase}}/api/v1/password/confirm"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{userBase}}/api/v1/auth/logout?refreshToken={{refreshToken}}",
+              "host": ["{{userBase}}"],
+              "path": ["api", "v1", "auth", "logout"],
+              "query": [{ "key": "refreshToken", "value": "{{refreshToken}}" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product catalog",
+      "item": [
+        {
+          "name": "Create category",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  pm.collectionVariables.set('categoryId', String(pm.response.json().id));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jackets\",\n  \"description\": \"Outerwear\"\n}"
+            },
+            "url": "{{catalogBase}}/categories"
+          }
+        },
+        {
+          "name": "List categories",
+          "request": {
+            "method": "GET",
+            "url": "{{catalogBase}}/categories"
+          }
+        },
+        {
+          "name": "Create product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  pm.collectionVariables.set('productId', String(pm.response.json().id));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Wool jacket\",\n  \"description\": \"Warm wool jacket for winter\",\n  \"price\": 129.99,\n  \"categoryId\": {{categoryId}},\n  \"imageUrls\": [\"https://example.com/jacket.jpg\"],\n  \"specifications\": {\n    \"material\": \"wool\",\n    \"size\": \"M\"\n  },\n  \"metadata\": {\n    \"featured\": true\n  }\n}"
+            },
+            "url": "{{catalogBase}}/products",
+            "description": "Indexes the product in Elasticsearch after it is saved."
+          }
+        },
+        {
+          "name": "Get product",
+          "request": {
+            "method": "GET",
+            "url": "{{catalogBase}}/products/{{productId}}"
+          }
+        },
+        {
+          "name": "Browse by category",
+          "request": {
+            "method": "GET",
+            "url": "{{catalogBase}}/products/category/{{categoryId}}"
+          }
+        },
+        {
+          "name": "Search products",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{catalogBase}}/products/search?q=jaket",
+              "host": ["{{catalogBase}}"],
+              "path": ["products", "search"],
+              "query": [{ "key": "q", "value": "jaket", "description": "Fuzzy match for jacket" }]
+            },
+            "description": "Requires Elasticsearch on localhost:9200. A typo such as jaket can match jacket."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cart service",
+      "item": [
+        {
+          "name": "Add item",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const items = pm.response.json().items || [];",
+                  "  if (items.length) {",
+                  "    pm.collectionVariables.set('cartItemId', String(items[items.length - 1].id));",
+                  "  }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": {{userId}},\n  \"productId\": {{productId}},\n  \"productName\": \"Wool jacket\",\n  \"unitPrice\": 129.99,\n  \"quantity\": 1,\n  \"attributes\": {\n    \"size\": \"M\",\n    \"color\": \"navy\"\n  }\n}"
+            },
+            "url": "{{cartBase}}/api/v1/cart/items",
+            "description": "Stores the cart in MongoDB and caches it in Redis."
+          }
+        },
+        {
+          "name": "Get cart",
+          "request": {
+            "method": "GET",
+            "url": "{{cartBase}}/api/v1/cart/{{userId}}"
+          }
+        },
+        {
+          "name": "Update quantity",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 2\n}"
+            },
+            "url": "{{cartBase}}/api/v1/cart/items/{{cartItemId}}"
+          }
+        },
+        {
+          "name": "Remove item",
+          "request": {
+            "method": "DELETE",
+            "url": "{{cartBase}}/api/v1/cart/items/{{cartItemId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Order service",
+      "item": [
+        {
+          "name": "Checkout",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  pm.collectionVariables.set('orderId', String(pm.response.json().orderId));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": {{userId}},\n  \"email\": \"sumit@example.com\",\n  \"customerName\": \"Sumit Sharma\",\n  \"phoneNumber\": \"9876543210\",\n  \"paymentMethod\": \"UPI\",\n  \"addressLine\": \"12 MG Road\",\n  \"city\": \"Pune\",\n  \"postalCode\": \"411001\",\n  \"country\": \"India\",\n  \"items\": [\n    {\n      \"productId\": {{productId}},\n      \"productName\": \"Wool jacket\",\n      \"unitPrice\": 129.99,\n      \"quantity\": 1\n    }\n  ]\n}"
+            },
+            "url": "{{orderBase}}/api/v1/orders/checkout",
+            "description": "paymentMethod must be CARD, NET_BANKING, UPI, or WALLET. Publishes order.placed, which the email service turns into mail."
+          }
+        },
+        {
+          "name": "Get order",
+          "request": {
+            "method": "GET",
+            "url": "{{orderBase}}/api/v1/orders/{{orderId}}"
+          }
+        },
+        {
+          "name": "Order history",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{orderBase}}/api/v1/orders?userId={{userId}}",
+              "host": ["{{orderBase}}"],
+              "path": ["api", "v1", "orders"],
+              "query": [{ "key": "userId", "value": "{{userId}}" }]
+            }
+          }
+        },
+        {
+          "name": "Update status",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"SHIPPED\"\n}"
+            },
+            "url": "{{orderBase}}/api/v1/orders/{{orderId}}/status",
+            "description": "status must be PLACED, PAID, SHIPPED, OUT_FOR_DELIVERY, DELIVERED, or CANCELLED."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payment service",
+      "item": [
+        {
+          "name": "Initialize payment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 12999,\n  \"orderId\": \"{{orderId}}\",\n  \"phoneNumber\": \"9876543210\",\n  \"name\": \"Sumit Sharma\"\n}"
+            },
+            "url": "{{paymentBase}}/v1/payment/initialize",
+            "description": "amount is in minor units. Needs Razorpay or Stripe keys or the call fails."
+          }
+        },
+        {
+          "name": "Get receipt",
+          "request": {
+            "method": "GET",
+            "url": "{{paymentBase}}/v1/payment/receipt/{{orderId}}"
+          }
+        },
+        {
+          "name": "Stripe webhook",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Stripe-Signature", "value": "replace-with-stripe-signature" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"checkout.session.completed\"\n}"
+            },
+            "url": "{{paymentBase}}/webhook/stripe",
+            "description": "Rejected unless the Stripe webhook secret matches this payload."
+          }
+        },
+        {
+          "name": "Razorpay webhook",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Razorpay-Signature", "value": "replace-with-razorpay-signature" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"payment.captured\"\n}"
+            },
+            "url": "{{paymentBase}}/webhook/razorpay",
+            "description": "Rejected unless the Razorpay webhook secret matches this payload."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Email service",
+      "item": [
+        {
+          "name": "List notifications",
+          "request": {
+            "method": "GET",
+            "url": "{{emailBase}}/notifications",
+            "description": "Rows written after the email service consumes emailservice, order.placed, or payment.confirmed."
+          }
+        }
+      ]
+    }
+  ]
+}

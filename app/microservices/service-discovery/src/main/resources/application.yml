@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: service-discovery
+
+server:
+  port: 9001
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
